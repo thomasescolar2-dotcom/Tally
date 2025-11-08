@@ -11,17 +11,17 @@ export function HeroBackground() {
     const container = containerRef.current;
     if (!container) return;
 
-    const gradient = { angle: 135 };
+    const gradient = { angle: 145 };
 
     const gradientTimeline = gsap.timeline({ repeat: -1, yoyo: true });
     gradientTimeline.to(gradient, {
-      angle: 205,
-      duration: 12,
+      angle: 320,
+      duration: 14,
       ease: "sine.inOut",
       onUpdate: () => {
         container.style.setProperty(
           "background",
-          `linear-gradient(${gradient.angle}deg, rgba(0, 225, 164, 0.25), rgba(0, 183, 255, 0.15))`
+          `linear-gradient(${gradient.angle}deg, rgba(255, 140, 104, 0.55), rgba(255, 93, 177, 0.45), rgba(107, 91, 255, 0.55))`
         );
       }
     });
@@ -60,9 +60,10 @@ export function HeroBackground() {
 
   return (
     <div ref={containerRef} className="hero-background">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(0,225,164,0.4),transparent_55%)]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_30%,rgba(0,183,255,0.3),transparent_60%)]" />
-      <div className="absolute inset-0 opacity-50 mix-blend-screen">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_20%,rgba(255,224,173,0.65),transparent_55%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_25%,rgba(0,195,255,0.45),transparent_55%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_80%,rgba(255,93,177,0.3),transparent_60%)]" />
+      <div className="absolute inset-0 opacity-60 mix-blend-screen">
         {particles.map((_, index) => (
           <span key={index} className="particle" />
         ))}

@@ -78,8 +78,8 @@ main {
   width: 4px;
   height: 4px;
   border-radius: 999px;
-  background: rgba(0, 225, 164, 0.6);
-  box-shadow: 0 0 12px rgba(0, 225, 164, 0.8);
+  background: rgba(255, 140, 104, 0.7);
+  box-shadow: 0 0 14px rgba(255, 93, 177, 0.9);
 }
 
 .light-mode body {
