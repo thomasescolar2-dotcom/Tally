@@ -4,17 +4,16 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  QrCode,
-  Zap,
-  Shield,
-  CheckCircle,
   ArrowRight,
-  Menu,
-  X,
-  BadgeCheck,
-  Sparkles,
+  BarChart3,
   Building2,
-  Quote,
+  CheckCircle2,
+  Menu,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  Wallet,
+  X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Archivo_Black } from 'next/font/google';
@@ -23,10 +22,39 @@ import { cn } from '@/lib/utils';
 const archivoBlack = Archivo_Black({ subsets: ['latin'], weight: '400' });
 
 const navLinks = [
-  { href: '#vision', label: 'Vision' },
-  { href: '#why', label: 'Pourquoi' },
-  { href: '#how', label: 'Comment' },
-  { href: '#pricing', label: 'Tarifs' },
+  { href: '#produit', label: 'Produit' },
+  { href: '#solutions', label: 'Solutions' },
+  { href: '#tarifs', label: 'Tarifs' },
+  { href: '#ressources', label: 'Ressources' },
+];
+
+const trustedLogos = ['Vente-privee', 'Le Slip Français', 'Decathlon', 'LVMH'];
+
+const featureCards = [
+  {
+    icon: ShieldCheck,
+    title: 'Conformité automatisée',
+    description:
+      'Une surveillance continue des réglementations textiles et ESPR avec alertes proactives avant chaque mise sur le marché.',
+  },
+  {
+    icon: Wallet,
+    title: 'Monétisation transparente',
+    description:
+      'Connectez vos flux de paiements pour facturer chaque passeport numérique et visualiser les revenus générés en temps réel.',
+  },
+  {
+    icon: Sparkles,
+    title: 'Expériences immersives',
+    description:
+      'Racontez l’histoire de vos produits grâce à des expériences interactives, personnalisées pour chaque marque et collection.',
+  },
+];
+
+const metrics = [
+  { value: '7 min', label: 'Pour créer un passeport complet' },
+  { value: '98 %', label: 'Des audits validés du premier coup' },
+  { value: '2,5x', label: 'De conversion sur les pages produit' },
 ];
 
 export default function Home() {
@@ -35,22 +63,17 @@ export default function Home() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white">
-      <nav className="fixed top-0 w-full z-50 bg-black/70 backdrop-blur-2xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <QrCode className="h-8 w-8 text-[#ec4899]" />
-              <span className="text-xl font-semibold text-white">Tally</span>
-            </div>
+    <div className="min-h-screen bg-[#0b0b0f] text-white">
+      <div className="fixed inset-x-0 top-0 z-50">
+        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mt-4 flex items-center justify-between rounded-full border border-white/10 bg-black/60 px-4 py-3 backdrop-blur-xl">
+            <Link href="/" className="flex items-center space-x-2">
+              <span className="text-lg font-semibold">Tally</span>
+            </Link>
 
-            <div className="hidden md:flex items-center space-x-8">
+            <div className="hidden md:flex items-center space-x-8 text-sm text-gray-200">
               {navLinks.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
+                <a key={item.href} href={item.href} className="transition-colors hover:text-white">
                   {item.label}
                 </a>
               ))}
@@ -60,7 +83,7 @@ export default function Home() {
               <Link
                 href="/demo"
                 className={cn(
-                  'wave-button hidden md:inline-flex items-center justify-center rounded-full px-6 py-2 text-sm shadow-lg shadow-pink-500/20',
+                  'wave-button hidden md:inline-flex items-center justify-center rounded-full px-6 py-2 text-xs tracking-widest shadow-lg shadow-pink-500/30',
                   archivoBlack.className,
                 )}
               >
@@ -69,7 +92,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setMenuOpen((prev) => !prev)}
-                className="md:hidden w-10 h-10 inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 text-white"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white md:hidden"
                 aria-label="Ouvrir le menu"
                 aria-expanded={menuOpen}
               >
@@ -77,8 +100,8 @@ export default function Home() {
               </button>
             </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       <AnimatePresence>
         {menuOpen && (
@@ -86,34 +109,28 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="md:hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-xl"
+            className="fixed inset-0 z-40 bg-black/80 backdrop-blur"
           >
             <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'tween', duration: 0.3 }}
-              className="ml-auto h-full w-64 bg-black/90 border-l border-white/10 p-6 space-y-6"
+              initial={{ y: -24, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -24, opacity: 0 }}
+              className="mx-4 mt-32 rounded-3xl border border-white/10 bg-black/90 p-6"
             >
-              <div className="flex items-center justify-between">
+              <div className="mb-6 flex items-center justify-between">
                 <span className="text-lg font-semibold">Menu</span>
                 <button
                   type="button"
                   onClick={closeMenu}
-                  className="w-10 h-10 inline-flex items-center justify-center rounded-xl border border-white/10"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10"
                   aria-label="Fermer le menu"
                 >
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <div className="flex flex-col space-y-4">
+              <div className="mb-6 grid gap-4 text-base text-gray-200">
                 {navLinks.map((item) => (
-                  <a
-                    key={item.href}
-                    href={item.href}
-                    onClick={closeMenu}
-                    className="text-gray-300 hover:text-white transition-colors"
-                  >
+                  <a key={item.href} href={item.href} onClick={closeMenu} className="rounded-xl px-4 py-3 transition-colors hover:bg-white/5">
                     {item.label}
                   </a>
                 ))}
@@ -122,7 +139,7 @@ export default function Home() {
                 href="/demo"
                 onClick={closeMenu}
                 className={cn(
-                  'wave-button inline-flex items-center justify-center rounded-full px-6 py-3 text-sm shadow-lg shadow-pink-500/20',
+                  'wave-button inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-xs tracking-widest shadow-lg shadow-pink-500/30',
                   archivoBlack.className,
                 )}
               >
@@ -133,434 +150,352 @@ export default function Home() {
         )}
       </AnimatePresence>
 
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0">
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.2, 0.35, 0.2],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-          <motion.div
-            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gray-500/10 rounded-full blur-3xl"
-            animate={{
-              scale: [1.1, 0.95, 1.1],
-              opacity: [0.2, 0.4, 0.2],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
-        </div>
-
-        <div className="max-w-7xl mx-auto relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="inline-flex items-center space-x-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2 mb-8"
-            >
-              <span className="w-2 h-2 bg-emerald-300 rounded-full animate-pulse" />
-              <span className="text-sm text-gray-300">Conforme ESPR 2024</span>
-            </motion.div>
-
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight">
-              THOMAS EST LE MEILLEUR !
-            </h1>
-
-            <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Créez, hébergez et diffusez vos Digital Product Passports en 7 minutes, avec une traçabilité complète et une conformité vérifiée en continu.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/demo">
-                <Button size="lg" className="bg-pink-500 hover:bg-pink-600 text-white px-8 py-6 text-lg rounded-2xl shadow-xl shadow-pink-500/20 transition-all hover:shadow-2xl hover:shadow-pink-500/30">
-                  Essayer la démo
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Button
-                size="lg"
-                variant="outline"
-                asChild
-                className="border-white/20 text-white hover:bg-white/5 px-8 py-6 text-lg rounded-2xl"
-              >
-                <Link href="#vision">Découvrir la vision</Link>
-              </Button>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="mt-20 relative"
-          >
-            <div className="relative mx-auto max-w-5xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-gray-500/20 blur-3xl rounded-3xl" />
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 shadow-2xl"
-              >
-                <QrCode className="h-48 w-48 mx-auto text-pink-400" strokeWidth={1} />
-                <div className="absolute top-4 right-4 w-3 h-3 bg-emerald-300 rounded-full animate-pulse" />
-                <div className="absolute bottom-4 left-4 w-2 h-2 bg-pink-400 rounded-full animate-pulse" />
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section id="vision" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <span className="inline-flex items-center space-x-2 bg-white/5 border border-white/10 rounded-full px-4 py-1 text-sm text-gray-300">
-              <Sparkles className="h-4 w-4 text-pink-400" />
-              <span>La vision Tally</span>
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-white leading-tight">
-              La conformité produit comme levier de confiance client
-            </h2>
-            <p className="text-lg text-gray-300 leading-relaxed">
-              Nous rapprochons les fabricants, les distributeurs et les consommateurs autour d'une information produit vivante. Chaque passeport numérique Tally raconte l'histoire du produit, de ses composants et de ses engagements environnementaux.
-            </p>
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                <BadgeCheck className="h-8 w-8 text-pink-400 mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Confiance certifiée</h3>
-                <p className="text-gray-400 text-sm">
-                  Contrôles automatiques ESPR, alertes réglementaires et audit trail prêt pour vos partenaires.
-                </p>
-              </div>
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-                <Building2 className="h-8 w-8 text-pink-400 mb-4" />
-                <h3 className="text-xl font-semibold mb-2">Échelle industrielle</h3>
-                <p className="text-gray-400 text-sm">
-                  API, connecteurs ERP et gestion multi-sites pour publier des milliers de DPP sans friction.
-                </p>
-              </div>
-            </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="bg-white/5 border border-white/10 rounded-3xl p-10 space-y-6"
-          >
-            <div className="flex items-center space-x-4">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500 to-gray-500 flex items-center justify-center">
-                <Sparkles className="h-7 w-7 text-white" />
-              </div>
-              <div>
-                <p className="text-sm uppercase tracking-[0.3em] text-pink-200">Objectif</p>
-                <h3 className="text-2xl font-semibold">Transparence totale</h3>
-              </div>
-            </div>
-            <p className="text-gray-300 leading-relaxed">
-              Tally centralise la donnée produit, calcule automatiquement les indicateurs d'impact et met vos fournisseurs à contribution grâce à des workflows collaboratifs. Vos clients scannent le QR code et accèdent à une expérience claire, multilingue et accessible.
-            </p>
-            <ul className="space-y-3 text-gray-300">
-              <li className="flex items-start space-x-3">
-                <CheckCircle className="h-5 w-5 text-emerald-300 mt-1" />
-                <span>Versioning automatique et archivage souverain en Europe.</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <CheckCircle className="h-5 w-5 text-emerald-300 mt-1" />
-                <span>Bibliothèque de modèles sectoriels pour déployer vos DPP en quelques clics.</span>
-              </li>
-              <li className="flex items-start space-x-3">
-                <CheckCircle className="h-5 w-5 text-emerald-300 mt-1" />
-                <span>Lecture offline et QR dynamiques pour gérer les révisions sans re-impression.</span>
-              </li>
-            </ul>
-          </motion.div>
-        </div>
-      </section>
-
-      <section id="why" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">Pourquoi Tally ?</h2>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-              La solution la plus complète pour prouver la conformité et les engagements de vos produits.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Zap,
-                title: 'Déploiement éclair',
-                description:
-                  'Assistant intelligent pour guider chaque saisie, import CSV et connecteurs ERP pour industrialiser la génération de DPP.',
-                delay: 0.2,
-              },
-              {
-                icon: Shield,
-                title: 'Conformité prouvée',
-                description:
-                  'Contrôles réglementaires continus, export audit-ready et vérification automatique des données critiques.',
-                delay: 0.4,
-              },
-              {
-                icon: BadgeCheck,
-                title: 'Crédibilité renforcée',
-                description:
-                  'Diffusion multicanale, analytics de scans et pages publiques personnalisées pour vos clients et partenaires.',
-                delay: 0.6,
-              },
-            ].map((feature, index) => (
-              <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: feature.delay }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all hover:shadow-xl"
-              >
-                <div className="w-14 h-14 bg-gradient-to-br from-pink-500 to-gray-500 rounded-2xl flex items-center justify-center mb-6">
-                  <feature.icon className="h-7 w-7 text-white" />
-                </div>
-                <h3 className="text-2xl font-semibold text-white mb-4">{feature.title}</h3>
-                <p className="text-gray-400 leading-relaxed">{feature.description}</p>
-              </motion.div>
-            ))}
+      <main className="relative overflow-hidden">
+        <div className="relative isolate overflow-hidden pb-24 pt-44">
+          <div className="absolute inset-0 -z-10">
+            <div className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#6366F1_0deg,#EC4899_140deg,#F97316_220deg,#22D3EE_320deg,#6366F1_360deg)] opacity-80 blur-3xl" />
+            <div className="pointer-events-none absolute left-1/4 top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-pink-500/40 blur-3xl" />
+            <div className="pointer-events-none absolute right-1/4 bottom-0 h-[400px] w-[500px] translate-y-1/2 rounded-full bg-sky-500/40 blur-3xl" />
           </div>
-        </div>
-      </section>
 
-      <section className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <p className="text-sm uppercase tracking-[0.35em] text-pink-200 mb-4">Ils nous font confiance</p>
-            <h2 className="text-4xl font-bold text-white">Des industriels européens déjà certifiés</h2>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {[
-              {
-                quote:
-                  'Avec Tally, nous avons réduit de 60% le temps de production d’un passeport numérique et gagné en sérénité lors des audits.',
-                author: 'Claire D., Directrice conformité - HexaTextile',
-              },
-              {
-                quote:
-                  'Les QR codes dynamiques et l’API nous permettent de mettre à jour les fiches produits sans arrêter la production.',
-                author: 'Marc L., COO - VoltBatteries',
-              },
-              {
-                quote:
-                  'Nos distributeurs européens accèdent à une information claire et multilingue, ce qui fluidifie nos ventes.',
-                author: 'Sarah B., Head of Product - NovaHome',
-              },
-            ].map((testimonial, index) => (
+          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+            <div className="relative z-10">
               <motion.div
-                key={testimonial.author}
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className="bg-white/5 border border-white/10 rounded-3xl p-8 relative overflow-hidden"
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center space-x-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur"
               >
-                <Quote className="h-10 w-10 text-pink-500/60 mb-6" />
-                <p className="text-lg text-gray-200 leading-relaxed mb-6">{testimonial.quote}</p>
-                <p className="text-sm text-gray-400">{testimonial.author}</p>
+                <span className="h-2 w-2 rounded-full bg-emerald-300" />
+                <span>La nouvelle infrastructure du passeport produit</span>
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      <section id="how" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">Comment ça marche</h2>
-            <p className="text-xl text-gray-300">Trois étapes pour votre conformité</p>
-          </motion.div>
-
-          <div className="relative max-w-4xl mx-auto">
-            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-pink-500 via-gray-500 to-pink-500 hidden lg:block" />
-
-            {[
-              { step: '01', title: 'Créez votre DPP', description: 'Saisissez les informations produit via notre interface guidée' },
-              { step: '02', title: 'Générez le QR Code', description: 'Obtenez instantanément un QR code unique et conforme' },
-              { step: '03', title: 'Diffusez', description: 'Imprimez, intégrez ou partagez votre passeport numérique' },
-            ].map((step, index) => (
-              <motion.div
-                key={step.step}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className={`relative flex flex-col lg:flex-row items-center gap-8 mb-12 ${
-                  index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                }`}
+              <motion.h1
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl"
               >
-                <div className="flex-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all">
-                  <div className="text-5xl font-bold text-pink-500/30 mb-4">{step.step}</div>
-                  <h3 className="text-2xl font-semibold text-white mb-3">{step.title}</h3>
-                  <p className="text-gray-400">{step.description}</p>
-                </div>
-                <div className="hidden lg:block absolute left-1/2 w-6 h-6 bg-pink-400 rounded-full -translate-x-1/2 ring-4 ring-black/70" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+                THOMAS EST LE MEILLEUR !
+              </motion.h1>
 
-      <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">Tarifs transparents</h2>
-            <p className="text-xl text-gray-300">Choisissez le plan adapté à votre volume</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: 'Starter',
-                price: '49€',
-                period: '/mois',
-                features: ['100 DPP/mois', 'QR codes illimités', 'Support email', 'Hébergement inclus'],
-                popular: false,
-                cta: 'Commencer',
-                link: '/demo',
-              },
-              {
-                name: 'Business',
-                price: '149€',
-                period: '/mois',
-                features: ['500 DPP/mois', 'API REST complète', 'Support prioritaire', 'Multi-utilisateurs'],
-                popular: true,
-                cta: 'Essayer maintenant',
-                link: '/demo',
-              },
-              {
-                name: 'Enterprise',
-                price: 'Sur mesure',
-                period: '',
-                features: ['Volume illimité', 'Intégration ERP', 'Account manager', 'SLA garanti'],
-                popular: false,
-                cta: "Contacter l'équipe",
-                link: 'mailto:contact@tally.com?subject=Demande%20Enterprise%20Tally',
-              },
-            ].map((plan, index) => (
-              <motion.div
-                key={plan.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className={`relative bg-white/5 backdrop-blur-sm border rounded-2xl p-8 hover:bg-white/10 transition-all ${
-                  plan.popular ? 'border-pink-500 ring-2 ring-pink-500/50 scale-105' : 'border-white/10'
-                }`}
+              <motion.p
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                className="mt-6 max-w-xl text-lg text-white/80 sm:text-xl"
               >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-pink-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    Populaire
-                  </div>
-                )}
-                <h3 className="text-2xl font-semibold text-white mb-2">{plan.name}</h3>
-                <div className="mb-6">
-                  <span className="text-5xl font-bold text-white">{plan.price}</span>
-                  {plan.period && <span className="text-gray-400">{plan.period}</span>}
-                </div>
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-center text-gray-300">
-                      <CheckCircle className="h-5 w-5 text-emerald-300 mr-3" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <Link href={plan.link} className="block">
-                  <Button
-                    className={`w-full rounded-xl py-6 ${
-                      plan.popular
-                        ? 'bg-pink-500 hover:bg-pink-600 text-white'
-                        : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
-                    }`}
-                  >
-                    {plan.cta}
+                Rejoignez les maisons qui construisent des expériences circulaires : paiements fluides, traçabilité totale et conformité automatisée pour chaque produit mis sur le marché.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
+              >
+                <Link href="/demo">
+                  <Button size="lg" className="group rounded-full bg-white px-8 py-6 text-base font-semibold text-slate-950 transition-all hover:bg-white/90">
+                    Démarrer
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                   </Button>
                 </Link>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full border-white/30 bg-white/10 px-8 py-6 text-base text-white hover:bg-white/20"
+                >
+                  Mirador avec Google
+                </Button>
               </motion.div>
-            ))}
+
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.4 }}
+                className="mt-14"
+              >
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Ils orchestrent leurs passeports avec Tally</p>
+                <div className="mt-6 flex flex-wrap items-center gap-x-10 gap-y-4 text-sm text-white/70">
+                  {trustedLogos.map((logo) => (
+                    <span key={logo} className="font-semibold uppercase tracking-widest">
+                      {logo}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative z-10"
+            >
+              <div className="relative mx-auto w-full max-w-md rounded-[2.5rem] border border-white/10 bg-black/70 p-6 shadow-[0_20px_60px_-15px_rgba(15,23,42,0.7)] backdrop-blur">
+                <div className="flex items-center justify-between text-xs text-white/50">
+                  <span>flux-03</span>
+                  <span>Cycle de vie</span>
+                </div>
+                <div className="mt-6 rounded-3xl border border-white/5 bg-white/5 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.25em] text-white/40">Volume du jour</p>
+                      <p className="mt-2 text-3xl font-semibold">126 840 €</p>
+                    </div>
+                    <div className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200">
+                      +18,3 %
+                    </div>
+                  </div>
+                  <div className="mt-6 h-40 rounded-2xl bg-gradient-to-br from-indigo-500/50 via-sky-500/40 to-emerald-400/40" />
+                  <div className="mt-6 grid grid-cols-3 gap-4 text-sm text-white/70">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/40">Passeports</p>
+                      <p className="mt-2 text-lg font-semibold">4 280</p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/40">Clients</p>
+                      <p className="mt-2 text-lg font-semibold">1 920</p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/40">Réserves</p>
+                      <p className="mt-2 text-lg font-semibold">742</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-6 space-y-4">
+                  <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/40">Equipe</p>
+                      <p className="text-sm text-white/80">Maison Horizon</p>
+                    </div>
+                    <div className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs">Live</div>
+                  </div>
+                  <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/40">Flux</p>
+                      <p className="text-sm text-white/80">Restauration des passeports</p>
+                    </div>
+                    <div className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200">
+                      Stable
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
-      </section>
 
-      <footer className="border-t border-white/10 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-2 mb-6 md:mb-0">
-              <QrCode className="h-8 w-8 text-pink-500" />
-              <span className="text-xl font-semibold text-white">Tally</span>
+        <section id="produit" className="relative border-t border-white/5 bg-black/40 py-24">
+          <div className="pointer-events-none absolute inset-x-0 top-0 -translate-y-1/2">
+            <div className="mx-auto h-40 w-40 rounded-full bg-pink-500/30 blur-3xl" />
+          </div>
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 max-w-3xl">
+              <h2 className="text-3xl font-semibold text-white sm:text-4xl">Une plateforme complète, inspirée par Stripe</h2>
+              <p className="mt-4 text-lg text-white/70">
+                Centralisez vos flux de production, d’authentification et de paiement dans une seule infrastructure. Chaque API est documentée, testée et prête à être branchée sur votre ERP.
+              </p>
             </div>
-            <div className="flex flex-wrap justify-center gap-8 text-gray-400">
-              <a href="#vision" className="hover:text-white transition-colors">
-                Vision
-              </a>
-              <a href="#why" className="hover:text-white transition-colors">
-                Produit
-              </a>
-              <a href="#pricing" className="hover:text-white transition-colors">
-                Tarifs
-              </a>
-              <a href="mailto:contact@tally.com" className="hover:text-white transition-colors">
-                Contact
-              </a>
+            <div className="grid gap-8 lg:grid-cols-3">
+              {featureCards.map((feature) => (
+                <div key={feature.title} className="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/[0.03] p-8">
+                  <feature.icon className="h-10 w-10 text-sky-300" />
+                  <h3 className="mt-6 text-xl font-semibold text-white">{feature.title}</h3>
+                  <p className="mt-4 text-sm text-white/70">{feature.description}</p>
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/0 via-white/0 to-white/0 transition-opacity duration-300 group-hover:via-white/5 group-hover:to-white/10" />
+                </div>
+              ))}
             </div>
           </div>
-          <div className="mt-8 text-center text-gray-500 text-sm">
-            © 2024 Tally. Conforme ESPR. Made in Europe.
+        </section>
+
+        <section id="solutions" className="relative py-24">
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.2),transparent_55%)]" />
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <div>
+                <p className="text-sm uppercase tracking-[0.4em] text-white/40">Solutions verticales</p>
+                <h2 className="mt-6 text-4xl font-semibold text-white">
+                  Conçu pour les marques, les industriels et les places de marché.
+                </h2>
+                <p className="mt-4 text-lg text-white/70">
+                  Du prototypage à l’industrialisation, Tally aligne vos équipes produit, conformité et finance avec des workflows de bout en bout.
+                </p>
+                <div className="mt-10 grid gap-6">
+                  {[Building2, Users, BarChart3].map((Icon, index) => (
+                    <div key={index} className="flex gap-4 rounded-3xl border border-white/5 bg-white/10 p-6">
+                      <Icon className="mt-1 h-8 w-8 text-pink-300" />
+                      <div>
+                        <h3 className="text-lg font-semibold text-white">
+                          {index === 0 && 'Collecte industrielle'}
+                          {index === 1 && 'Expérience client augmentée'}
+                          {index === 2 && 'Pilotage en temps réel'}
+                        </h3>
+                        <p className="mt-2 text-sm text-white/70">
+                          {index === 0 && 'Numérisez vos ateliers et synchronisez les données matières pour chaque lot produit.'}
+                          {index === 1 && 'Activez le storytelling, la fidélisation et la seconde main directement depuis le passeport.'}
+                          {index === 2 && 'Suivez les volumes, la conformité et la rentabilité dans un cockpit unifié.'}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-[3rem] border border-white/10 bg-black/60 p-10 shadow-[0_30px_80px_-20px_rgba(15,23,42,0.8)] backdrop-blur">
+                <h3 className="text-sm uppercase tracking-[0.35em] text-white/40">Metrics</h3>
+                <div className="mt-8 grid gap-8 sm:grid-cols-3">
+                  {metrics.map((metric) => (
+                    <div key={metric.label} className="rounded-2xl border border-white/5 bg-white/5 px-4 py-6 text-center">
+                      <p className="text-3xl font-semibold text-white">{metric.value}</p>
+                      <p className="mt-2 text-xs text-white/60">{metric.label}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-10 space-y-4">
+                  {[1, 2].map((index) => (
+                    <div key={index} className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/5 px-5 py-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-emerald-300" />
+                      <p className="text-sm text-white/75">
+                        {index === 1
+                          ? 'Intégration API en moins de deux semaines grâce aux SDK et aux playbooks prêts à l’emploi.'
+                          : 'Support premium 24/7 avec des spécialistes conformité et data dédiés à votre déploiement.'}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="tarifs" className="relative border-t border-white/5 bg-black/40 py-24">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-[0.4em] text-white/40">Tarification</p>
+                <h2 className="mt-4 text-4xl font-semibold text-white">Des plans adaptés à votre croissance.</h2>
+                <p className="mt-3 max-w-2xl text-lg text-white/70">
+                  Commencez gratuitement, puis passez à une offre personnalisée lorsque vos volumes prennent de l’ampleur. Chaque plan comprend l’authentification avancée et l’accès aux API temps réel.
+                </p>
+              </div>
+              <Button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 hover:bg-white/90">
+                Comparer en détail
+              </Button>
+            </div>
+            <div className="grid gap-8 lg:grid-cols-3">
+              {[0, 1, 2].map((tier) => (
+                <div key={tier} className="flex flex-col rounded-3xl border border-white/5 bg-white/[0.03] p-8">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-semibold text-white">
+                      {tier === 0 && 'Essentiel'}
+                      {tier === 1 && 'Croissance'}
+                      {tier === 2 && 'Entreprise'}
+                    </h3>
+                    {tier === 1 && (
+                      <span className="rounded-full border border-pink-400/40 bg-pink-500/20 px-3 py-1 text-xs text-pink-200">
+                        Populaire
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-4 text-sm text-white/70">
+                    {tier === 0 && 'Tout ce qu’il faut pour créer, publier et suivre vos premiers passeports produit.'}
+                    {tier === 1 && 'Automatisez vos workflows et déployez l’infrastructure passeport à l’échelle internationale.'}
+                    {tier === 2 && 'Programmes sur mesure, support dédié et gouvernance renforcée pour les groupes mondiaux.'}
+                  </p>
+                  <div className="mt-8 text-4xl font-semibold text-white">
+                    {tier === 0 && '0 €'}
+                    {tier === 1 && '349 €'}
+                    {tier === 2 && 'Sur mesure'}
+                  </div>
+                  <ul className="mt-8 space-y-4 text-sm text-white/70">
+                    <li className="flex items-center gap-3">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+                      API temps réel et webhooks
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+                      Tableaux de bord interactifs
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+                      {tier === 2 ? 'Support dédié 24/7' : 'Support prioritaire'}
+                    </li>
+                  </ul>
+                  <Button
+                    variant="outline"
+                    className="mt-10 rounded-full border-white/40 bg-white/10 text-white hover:bg-white/20"
+                  >
+                    {tier === 2 ? 'Contacter notre équipe' : 'Commencer'}
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="ressources" className="relative py-24">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+              <div className="space-y-6">
+                <p className="text-sm uppercase tracking-[0.4em] text-white/40">Ressources</p>
+                <h2 className="text-4xl font-semibold text-white">Un accompagnement complet pour votre équipe.</h2>
+                <p className="text-lg text-white/70">
+                  Des guides de conformité, des SDK maintenus par nos équipes et un support live pour sécuriser chaque étape de votre projet passeport.
+                </p>
+                <div className="grid gap-4 text-sm text-white/70">
+                  <div className="flex items-start gap-3">
+                    <Sparkles className="mt-1 h-5 w-5 text-indigo-300" />
+                    <span>Playbooks de lancement prêts à l’emploi pour vos marchés européens.</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="mt-1 h-5 w-5 text-indigo-300" />
+                    <span>Veille réglementaire continue et synthèses sectorielles envoyées chaque semaine.</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Users className="mt-1 h-5 w-5 text-indigo-300" />
+                    <span>Communauté Slack privée avec plus de 400 experts circularité et data.</span>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-[3rem] border border-white/10 bg-black/60 p-10 shadow-[0_30px_80px_-20px_rgba(15,23,42,0.8)] backdrop-blur">
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+                  <p className="text-sm uppercase tracking-[0.35em] text-white/40">Newsletter</p>
+                  <h3 className="mt-4 text-2xl font-semibold text-white">Recevez le briefing ESPR</h3>
+                  <p className="mt-3 text-sm text-white/70">
+                    Les dernières actualités réglementaires, des benchmarks sectoriels et des bonnes pratiques directement dans votre boîte mail.
+                  </p>
+                  <form className="mt-6 space-y-4">
+                    <input
+                      type="email"
+                      required
+                      placeholder="prenom@entreprise.com"
+                      className="w-full rounded-full border border-white/20 bg-black/60 px-5 py-3 text-sm text-white placeholder:text-white/40 focus:border-white focus:outline-none"
+                    />
+                    <Button type="submit" className="w-full rounded-full bg-white py-3 text-sm font-semibold text-slate-900 hover:bg-white/90">
+                      S’inscrire
+                    </Button>
+                  </form>
+                </div>
+                <div className="mt-6 rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-white/70">
+                  <p className="font-semibold text-white">Webinaire en direct</p>
+                  <p className="mt-2">Audit ESPR &amp; Passeports produits : les retours de trois marques françaises.</p>
+                  <p className="mt-4 text-xs uppercase tracking-[0.3em] text-white/40">Jeudi 21 mars • 11h00</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer className="border-t border-white/5 bg-black/60 py-12">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+          <p className="text-sm text-white/60">© {new Date().getFullYear()} Tally. Tous droits réservés.</p>
+          <div className="flex flex-wrap gap-6 text-sm text-white/60">
+            <a href="#">Conditions</a>
+            <a href="#">Confidentialité</a>
+            <a href="#">Sécurité</a>
+            <a href="/demo">Démo</a>
           </div>
         </div>
       </footer>
