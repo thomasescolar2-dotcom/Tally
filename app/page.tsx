@@ -3,6 +3,7 @@
 import { BarChart3, Building2, CheckCircle2, ShieldCheck, Sparkles, Users, Wallet } from 'lucide-react';
 
 import { Hero } from '@/components/Hero';
+import { IntegrationIcons } from '@/components/IntegrationIcons';
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 
@@ -40,6 +41,7 @@ export default function Home() {
 
       <main className="relative overflow-hidden">
         <Hero />
+        <IntegrationIcons />
         <section id="produit" className="relative border-t border-white/5 bg-black/40 py-24">
           <div className="pointer-events-none absolute inset-x-0 top-0 -translate-y-1/2">
             <div className="mx-auto h-40 w-40 rounded-full bg-pink-500/30 blur-3xl" />

@@ -45,9 +45,9 @@ export function Hero() {
   return (
     <section className="relative overflow-hidden bg-[#0A0A1F]">
       <div className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-x-0 top-[-40%] h-[520px] bg-[radial-gradient(circle_at_top,_rgba(42,111,255,0.45),_rgba(10,10,31,0))]" />
-        <div className="absolute left-1/2 top-10 h-[460px] w-[720px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle_at_top,_rgba(111,255,232,0.28),_rgba(10,10,31,0))] blur-3xl" />
-        <div className="absolute inset-0 bg-[conic-gradient(from_120deg_at_50%_50%,#2A6FFF33,#61F4C544,#2A6FFF15)] animate-gradient-slow opacity-70" />
+        <div className="hero-gradient-primary" />
+        <div className="hero-gradient-secondary" />
+        <div className="hero-gradient-lines" />
       </div>
 
       <div className="mx-auto flex max-w-7xl flex-col gap-16 px-6 pb-24 pt-40 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
@@ -67,7 +67,7 @@ export function Hero() {
 
           <motion.h1
             variants={textItem}
-            className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl"
+            className="headline-shimmer mt-6 text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl"
           >
             Le passeport numérique produit, conforme à l’Europe.
           </motion.h1>
