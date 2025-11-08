@@ -1,41 +1,49 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-
-const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
+import "./globals.css";
+import type { Metadata } from "next";
+import { ThemeProvider } from "next-themes";
+import { inter, satoshi, spaceGrotesk } from "@/lib/fonts";
+import { ScrollProgressBar } from "@/components/scroll-progress-bar";
+import { InteractiveCursor } from "@/components/interactive-cursor";
 
 export const metadata: Metadata = {
-  title: "Tally - Le Passeport Numérique Produit Conforme à l'Europe",
-  description: "Créez, hébergez et diffusez vos DPP conformes à l'ESPR en 7 minutes.",
+  title: "Tally — Passeports Numériques & Conformité Produit",
+  description:
+    "Tally automatise la conformité européenne et crée vos Digital Product Passports en un clic.",
+  metadataBase: new URL("https://tally.eu"),
   openGraph: {
-    title: "Tally - Passeport Numérique Produit conforme à l'Europe",
+    title: "Tally — Passeports Numériques & Conformité Produit",
     description:
-      "Tally aide les équipes industrielles à créer et diffuser des passeports numériques produits conformes à l'ESPR en quelques minutes.",
-    url: 'https://tally.example.com',
-    siteName: 'Tally',
-    locale: 'fr_FR',
-    type: 'website',
+      "Découvrez la plateforme souveraine qui simplifie la conformité produit et génère vos passeports numériques.",
+    url: "https://tally.eu",
+    siteName: "Tally",
+    locale: "fr_FR",
+    type: "website"
   },
   twitter: {
-    card: 'summary_large_image',
-    title: "Tally - Passeport Numérique Produit",
+    card: "summary_large_image",
+    title: "Tally — Passeports Numériques & Conformité Produit",
     description:
-      "Découvrez Tally, la plateforme conforme ESPR pour vos Digital Product Passports.",
-  },
-  metadataBase: new URL('https://tally.example.com'),
-  icons: {
-    icon: '/favicon.svg',
-  },
+      "La conformité européenne devient un tableau de bord intelligent avec Tally.",
+    creator: "@tally_eu"
+  }
 };
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fr">
-      <body className={inter.className}>{children}</body>
+    <html lang="fr" suppressHydrationWarning>
+      <body
+        className={`${inter.variable} ${spaceGrotesk.variable} ${satoshi.variable} bg-night text-mist min-h-screen font-body antialiased`}
+      >
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <ScrollProgressBar />
+          <InteractiveCursor />
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
