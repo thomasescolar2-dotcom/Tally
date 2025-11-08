@@ -2,19 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
-import {
-  ArrowRight,
-  BarChart3,
-  Building2,
-  CheckCircle2,
-  Menu,
-  ShieldCheck,
-  Sparkles,
-  Users,
-  Wallet,
-  X,
-} from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ArrowRight, BarChart3, Building2, CheckCircle2, ShieldCheck, Sparkles, Users, Wallet } from 'lucide-react';
+import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
 import { Archivo_Black } from 'next/font/google';
 import { cn } from '@/lib/utils';
@@ -57,98 +47,39 @@ const metrics = [
   { value: '2,5x', label: 'De conversion sur les pages produit' },
 ];
 
+const trustedLogos = ['Vente-privee', 'Le Slip Français', 'Decathlon', 'LVMH'];
+
+const featureCards = [
+  {
+    icon: ShieldCheck,
+    title: 'Conformité automatisée',
+    description:
+      'Une surveillance continue des réglementations textiles et ESPR avec alertes proactives avant chaque mise sur le marché.',
+  },
+  {
+    icon: Wallet,
+    title: 'Monétisation transparente',
+    description:
+      'Connectez vos flux de paiements pour facturer chaque passeport numérique et visualiser les revenus générés en temps réel.',
+  },
+  {
+    icon: Sparkles,
+    title: 'Expériences immersives',
+    description:
+      'Racontez l’histoire de vos produits grâce à des expériences interactives, personnalisées pour chaque marque et collection.',
+  },
+];
+
+const metrics = [
+  { value: '7 min', label: 'Pour créer un passeport complet' },
+  { value: '98 %', label: 'Des audits validés du premier coup' },
+  { value: '2,5x', label: 'De conversion sur les pages produit' },
+];
+
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  const closeMenu = () => setMenuOpen(false);
-
   return (
-    <div className="min-h-screen bg-[#0b0b0f] text-white">
-      <div className="fixed inset-x-0 top-0 z-50">
-        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mt-4 flex items-center justify-between rounded-full border border-white/10 bg-black/60 px-4 py-3 backdrop-blur-xl">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-lg font-semibold">Tally</span>
-            </Link>
-
-            <div className="hidden md:flex items-center space-x-8 text-sm text-gray-200">
-              {navLinks.map((item) => (
-                <a key={item.href} href={item.href} className="transition-colors hover:text-white">
-                  {item.label}
-                </a>
-              ))}
-            </div>
-
-            <div className="flex items-center gap-3">
-              <Link
-                href="/demo"
-                className={cn(
-                  'wave-button hidden md:inline-flex items-center justify-center rounded-full px-6 py-2 text-xs tracking-widest shadow-lg shadow-pink-500/30',
-                  archivoBlack.className,
-                )}
-              >
-                <span>ESSAYER</span>
-              </Link>
-              <button
-                type="button"
-                onClick={() => setMenuOpen((prev) => !prev)}
-                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white md:hidden"
-                aria-label="Ouvrir le menu"
-                aria-expanded={menuOpen}
-              >
-                {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
-            </div>
-          </div>
-        </nav>
-      </div>
-
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-black/80 backdrop-blur"
-          >
-            <motion.div
-              initial={{ y: -24, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -24, opacity: 0 }}
-              className="mx-4 mt-32 rounded-3xl border border-white/10 bg-black/90 p-6"
-            >
-              <div className="mb-6 flex items-center justify-between">
-                <span className="text-lg font-semibold">Menu</span>
-                <button
-                  type="button"
-                  onClick={closeMenu}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10"
-                  aria-label="Fermer le menu"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
-              <div className="mb-6 grid gap-4 text-base text-gray-200">
-                {navLinks.map((item) => (
-                  <a key={item.href} href={item.href} onClick={closeMenu} className="rounded-xl px-4 py-3 transition-colors hover:bg-white/5">
-                    {item.label}
-                  </a>
-                ))}
-              </div>
-              <Link
-                href="/demo"
-                onClick={closeMenu}
-                className={cn(
-                  'wave-button inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-xs tracking-widest shadow-lg shadow-pink-500/30',
-                  archivoBlack.className,
-                )}
-              >
-                <span>ESSAYER</span>
-              </Link>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+    <div className="min-h-screen bg-[#0A0A1F] text-white">
+      <Header />
 
       <main className="relative overflow-hidden">
         <div className="relative isolate overflow-hidden pb-24 pt-44">
