@@ -1,334 +1,501 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { QrCode, Zap, Shield, CheckCircle, ArrowRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  ArrowRight,
+  BarChart3,
+  Building2,
+  CheckCircle2,
+  Menu,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  Wallet,
+  X,
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Archivo_Black } from 'next/font/google';
+import { cn } from '@/lib/utils';
+
+const archivoBlack = Archivo_Black({ subsets: ['latin'], weight: '400' });
+
+const navLinks = [
+  { href: '#produit', label: 'Produit' },
+  { href: '#solutions', label: 'Solutions' },
+  { href: '#tarifs', label: 'Tarifs' },
+  { href: '#ressources', label: 'Ressources' },
+];
+
+const trustedLogos = ['Vente-privee', 'Le Slip Français', 'Decathlon', 'LVMH'];
+
+const featureCards = [
+  {
+    icon: ShieldCheck,
+    title: 'Conformité automatisée',
+    description:
+      'Une surveillance continue des réglementations textiles et ESPR avec alertes proactives avant chaque mise sur le marché.',
+  },
+  {
+    icon: Wallet,
+    title: 'Monétisation transparente',
+    description:
+      'Connectez vos flux de paiements pour facturer chaque passeport numérique et visualiser les revenus générés en temps réel.',
+  },
+  {
+    icon: Sparkles,
+    title: 'Expériences immersives',
+    description:
+      'Racontez l’histoire de vos produits grâce à des expériences interactives, personnalisées pour chaque marque et collection.',
+  },
+];
+
+const metrics = [
+  { value: '7 min', label: 'Pour créer un passeport complet' },
+  { value: '98 %', label: 'Des audits validés du premier coup' },
+  { value: '2,5x', label: 'De conversion sur les pages produit' },
+];
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0B1120] via-[#1a1f35] to-[#0B1120]">
-      <nav className="fixed top-0 w-full z-50 bg-[#0B1120]/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <QrCode className="h-8 w-8 text-[#2563EB]" />
-              <span className="text-xl font-semibold text-white">Tally</span>
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              <a href="#why" className="text-gray-300 hover:text-white transition-colors">Pourquoi</a>
-              <a href="#how" className="text-gray-300 hover:text-white transition-colors">Comment</a>
-              <a href="#pricing" className="text-gray-300 hover:text-white transition-colors">Tarifs</a>
-            </div>
-            <Link href="/demo">
-              <Button className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white">
-                Essayer
-              </Button>
+    <div className="min-h-screen bg-[#0b0b0f] text-white">
+      <div className="fixed inset-x-0 top-0 z-50">
+        <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="mt-4 flex items-center justify-between rounded-full border border-white/10 bg-black/60 px-4 py-3 backdrop-blur-xl">
+            <Link href="/" className="flex items-center space-x-2">
+              <span className="text-lg font-semibold">Tally</span>
             </Link>
+
+            <div className="hidden md:flex items-center space-x-8 text-sm text-gray-200">
+              {navLinks.map((item) => (
+                <a key={item.href} href={item.href} className="transition-colors hover:text-white">
+                  {item.label}
+                </a>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Link
+                href="/demo"
+                className={cn(
+                  'wave-button hidden md:inline-flex items-center justify-center rounded-full px-6 py-2 text-xs tracking-widest shadow-lg shadow-pink-500/30',
+                  archivoBlack.className,
+                )}
+              >
+                <span>ESSAYER</span>
+              </Link>
+              <button
+                type="button"
+                onClick={() => setMenuOpen((prev) => !prev)}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white md:hidden"
+                aria-label="Ouvrir le menu"
+                aria-expanded={menuOpen}
+              >
+                {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </button>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
-      <section className="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0">
+      <AnimatePresence>
+        {menuOpen && (
           <motion.div
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#2563EB]/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#A7F3D0]/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-        </div>
-
-        <div className="max-w-7xl mx-auto relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-40 bg-black/80 backdrop-blur"
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1, delay: 0.2 }}
-              className="inline-flex items-center space-x-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full px-4 py-2 mb-8"
+              initial={{ y: -24, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -24, opacity: 0 }}
+              className="mx-4 mt-32 rounded-3xl border border-white/10 bg-black/90 p-6"
             >
-              <span className="w-2 h-2 bg-[#A7F3D0] rounded-full animate-pulse" />
-              <span className="text-sm text-gray-300">Conforme ESPR 2024</span>
-            </motion.div>
-
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Le passeport numérique<br />
-              <span className="bg-gradient-to-r from-[#2563EB] to-[#A7F3D0] bg-clip-text text-transparent">
-                produit, conforme à l'Europe.
-              </span>
-            </h1>
-
-            <p className="text-xl text-gray-400 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Créez, hébergez et diffusez vos DPP conformes à l'ESPR — en 7 minutes.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/demo">
-                <Button size="lg" className="bg-[#2563EB] hover:bg-[#1d4ed8] text-white px-8 py-6 text-lg rounded-2xl shadow-xl shadow-[#2563EB]/20 transition-all hover:shadow-2xl hover:shadow-[#2563EB]/30">
-                  Essayer la démo
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+              <div className="mb-6 flex items-center justify-between">
+                <span className="text-lg font-semibold">Menu</span>
+                <button
+                  type="button"
+                  onClick={closeMenu}
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10"
+                  aria-label="Fermer le menu"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+              <div className="mb-6 grid gap-4 text-base text-gray-200">
+                {navLinks.map((item) => (
+                  <a key={item.href} href={item.href} onClick={closeMenu} className="rounded-xl px-4 py-3 transition-colors hover:bg-white/5">
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+              <Link
+                href="/demo"
+                onClick={closeMenu}
+                className={cn(
+                  'wave-button inline-flex w-full items-center justify-center rounded-full px-6 py-3 text-xs tracking-widest shadow-lg shadow-pink-500/30',
+                  archivoBlack.className,
+                )}
+              >
+                <span>ESSAYER</span>
               </Link>
-              <Button size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/5 px-8 py-6 text-lg rounded-2xl">
-                Découvrir la vision
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <main className="relative overflow-hidden">
+        <div className="relative isolate overflow-hidden pb-24 pt-44">
+          <div className="absolute inset-0 -z-10">
+            <div className="pointer-events-none absolute left-1/2 top-0 h-[600px] w-[900px] -translate-x-1/2 rounded-full bg-[conic-gradient(from_180deg_at_50%_50%,#6366F1_0deg,#EC4899_140deg,#F97316_220deg,#22D3EE_320deg,#6366F1_360deg)] opacity-80 blur-3xl" />
+            <div className="pointer-events-none absolute left-1/4 top-1/2 h-[400px] w-[400px] -translate-y-1/2 rounded-full bg-pink-500/40 blur-3xl" />
+            <div className="pointer-events-none absolute right-1/4 bottom-0 h-[400px] w-[500px] translate-y-1/2 rounded-full bg-sky-500/40 blur-3xl" />
+          </div>
+
+          <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-4 sm:px-6 lg:grid-cols-[1.05fr_0.95fr] lg:px-8">
+            <div className="relative z-10">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center space-x-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white/80 backdrop-blur"
+              >
+                <span className="h-2 w-2 rounded-full bg-emerald-300" />
+                <span>La nouvelle infrastructure du passeport produit</span>
+              </motion.div>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                className="mt-6 text-4xl font-semibold tracking-tight text-white sm:text-6xl lg:text-7xl"
+              >
+                THOMAS EST LE MEILLEUR !
+              </motion.h1>
+
+              <motion.p
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
+                className="mt-6 max-w-xl text-lg text-white/80 sm:text-xl"
+              >
+                Rejoignez les maisons qui construisent des expériences circulaires : paiements fluides, traçabilité totale et conformité automatisée pour chaque produit mis sur le marché.
+              </motion.p>
+
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
+                className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center"
+              >
+                <Link href="/demo">
+                  <Button size="lg" className="group rounded-full bg-white px-8 py-6 text-base font-semibold text-slate-950 transition-all hover:bg-white/90">
+                    Démarrer
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </Button>
+                </Link>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="rounded-full border-white/30 bg-white/10 px-8 py-6 text-base text-white hover:bg-white/20"
+                >
+                  Mirador avec Google
+                </Button>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.4 }}
+                className="mt-14"
+              >
+                <p className="text-xs uppercase tracking-[0.3em] text-white/50">Ils orchestrent leurs passeports avec Tally</p>
+                <div className="mt-6 flex flex-wrap items-center gap-x-10 gap-y-4 text-sm text-white/70">
+                  {trustedLogos.map((logo) => (
+                    <span key={logo} className="font-semibold uppercase tracking-widest">
+                      {logo}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative z-10"
+            >
+              <div className="relative mx-auto w-full max-w-md rounded-[2.5rem] border border-white/10 bg-black/70 p-6 shadow-[0_20px_60px_-15px_rgba(15,23,42,0.7)] backdrop-blur">
+                <div className="flex items-center justify-between text-xs text-white/50">
+                  <span>flux-03</span>
+                  <span>Cycle de vie</span>
+                </div>
+                <div className="mt-6 rounded-3xl border border-white/5 bg-white/5 p-6">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.25em] text-white/40">Volume du jour</p>
+                      <p className="mt-2 text-3xl font-semibold">126 840 €</p>
+                    </div>
+                    <div className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200">
+                      +18,3 %
+                    </div>
+                  </div>
+                  <div className="mt-6 h-40 rounded-2xl bg-gradient-to-br from-indigo-500/50 via-sky-500/40 to-emerald-400/40" />
+                  <div className="mt-6 grid grid-cols-3 gap-4 text-sm text-white/70">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/40">Passeports</p>
+                      <p className="mt-2 text-lg font-semibold">4 280</p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/40">Clients</p>
+                      <p className="mt-2 text-lg font-semibold">1 920</p>
+                    </div>
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/40">Réserves</p>
+                      <p className="mt-2 text-lg font-semibold">742</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-6 space-y-4">
+                  <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/40">Equipe</p>
+                      <p className="text-sm text-white/80">Maison Horizon</p>
+                    </div>
+                    <div className="rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs">Live</div>
+                  </div>
+                  <div className="flex items-center justify-between rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
+                    <div>
+                      <p className="text-xs uppercase tracking-[0.2em] text-white/40">Flux</p>
+                      <p className="text-sm text-white/80">Restauration des passeports</p>
+                    </div>
+                    <div className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200">
+                      Stable
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        <section id="produit" className="relative border-t border-white/5 bg-black/40 py-24">
+          <div className="pointer-events-none absolute inset-x-0 top-0 -translate-y-1/2">
+            <div className="mx-auto h-40 w-40 rounded-full bg-pink-500/30 blur-3xl" />
+          </div>
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 max-w-3xl">
+              <h2 className="text-3xl font-semibold text-white sm:text-4xl">Une plateforme complète, inspirée par Stripe</h2>
+              <p className="mt-4 text-lg text-white/70">
+                Centralisez vos flux de production, d’authentification et de paiement dans une seule infrastructure. Chaque API est documentée, testée et prête à être branchée sur votre ERP.
+              </p>
+            </div>
+            <div className="grid gap-8 lg:grid-cols-3">
+              {featureCards.map((feature) => (
+                <div key={feature.title} className="group relative overflow-hidden rounded-3xl border border-white/5 bg-white/[0.03] p-8">
+                  <feature.icon className="h-10 w-10 text-sky-300" />
+                  <h3 className="mt-6 text-xl font-semibold text-white">{feature.title}</h3>
+                  <p className="mt-4 text-sm text-white/70">{feature.description}</p>
+                  <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white/0 via-white/0 to-white/0 transition-opacity duration-300 group-hover:via-white/5 group-hover:to-white/10" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="solutions" className="relative py-24">
+          <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(14,165,233,0.2),transparent_55%)]" />
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+              <div>
+                <p className="text-sm uppercase tracking-[0.4em] text-white/40">Solutions verticales</p>
+                <h2 className="mt-6 text-4xl font-semibold text-white">
+                  Conçu pour les marques, les industriels et les places de marché.
+                </h2>
+                <p className="mt-4 text-lg text-white/70">
+                  Du prototypage à l’industrialisation, Tally aligne vos équipes produit, conformité et finance avec des workflows de bout en bout.
+                </p>
+                <div className="mt-10 grid gap-6">
+                  {[Building2, Users, BarChart3].map((Icon, index) => (
+                    <div key={index} className="flex gap-4 rounded-3xl border border-white/5 bg-white/10 p-6">
+                      <Icon className="mt-1 h-8 w-8 text-pink-300" />
+                      <div>
+                        <h3 className="text-lg font-semibold text-white">
+                          {index === 0 && 'Collecte industrielle'}
+                          {index === 1 && 'Expérience client augmentée'}
+                          {index === 2 && 'Pilotage en temps réel'}
+                        </h3>
+                        <p className="mt-2 text-sm text-white/70">
+                          {index === 0 && 'Numérisez vos ateliers et synchronisez les données matières pour chaque lot produit.'}
+                          {index === 1 && 'Activez le storytelling, la fidélisation et la seconde main directement depuis le passeport.'}
+                          {index === 2 && 'Suivez les volumes, la conformité et la rentabilité dans un cockpit unifié.'}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="rounded-[3rem] border border-white/10 bg-black/60 p-10 shadow-[0_30px_80px_-20px_rgba(15,23,42,0.8)] backdrop-blur">
+                <h3 className="text-sm uppercase tracking-[0.35em] text-white/40">Metrics</h3>
+                <div className="mt-8 grid gap-8 sm:grid-cols-3">
+                  {metrics.map((metric) => (
+                    <div key={metric.label} className="rounded-2xl border border-white/5 bg-white/5 px-4 py-6 text-center">
+                      <p className="text-3xl font-semibold text-white">{metric.value}</p>
+                      <p className="mt-2 text-xs text-white/60">{metric.label}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-10 space-y-4">
+                  {[1, 2].map((index) => (
+                    <div key={index} className="flex items-start gap-4 rounded-2xl border border-white/5 bg-white/5 px-5 py-4">
+                      <CheckCircle2 className="mt-1 h-5 w-5 text-emerald-300" />
+                      <p className="text-sm text-white/75">
+                        {index === 1
+                          ? 'Intégration API en moins de deux semaines grâce aux SDK et aux playbooks prêts à l’emploi.'
+                          : 'Support premium 24/7 avec des spécialistes conformité et data dédiés à votre déploiement.'}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="tarifs" className="relative border-t border-white/5 bg-black/40 py-24">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-[0.4em] text-white/40">Tarification</p>
+                <h2 className="mt-4 text-4xl font-semibold text-white">Des plans adaptés à votre croissance.</h2>
+                <p className="mt-3 max-w-2xl text-lg text-white/70">
+                  Commencez gratuitement, puis passez à une offre personnalisée lorsque vos volumes prennent de l’ampleur. Chaque plan comprend l’authentification avancée et l’accès aux API temps réel.
+                </p>
+              </div>
+              <Button className="rounded-full bg-white px-6 py-3 text-sm font-semibold text-slate-900 hover:bg-white/90">
+                Comparer en détail
               </Button>
             </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="mt-20 relative"
-          >
-            <div className="relative mx-auto max-w-5xl">
-              <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/30 to-[#A7F3D0]/30 blur-3xl rounded-3xl" />
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="relative bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 shadow-2xl"
-              >
-                <QrCode className="h-48 w-48 mx-auto text-[#2563EB]" strokeWidth={1} />
-                <div className="absolute top-4 right-4 w-3 h-3 bg-[#A7F3D0] rounded-full animate-pulse" />
-                <div className="absolute bottom-4 left-4 w-2 h-2 bg-[#2563EB] rounded-full animate-pulse" />
-              </motion.div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section id="why" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              Pourquoi Tally ?
-            </h2>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-              La solution la plus simple pour se conformer aux exigences européennes
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Zap,
-                title: "Rapide",
-                description: "Créez un DPP complet en moins de 7 minutes. Interface intuitive, zéro formation nécessaire.",
-                delay: 0.2,
-              },
-              {
-                icon: Shield,
-                title: "Conforme",
-                description: "100% conforme ESPR. Hébergement sécurisé, traçabilité complète, archivage automatique.",
-                delay: 0.4,
-              },
-              {
-                icon: CheckCircle,
-                title: "Simple",
-                description: "Une plateforme, toutes vos données. Synchronisation avec vos outils existants.",
-                delay: 0.6,
-              },
-            ].map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: feature.delay }}
-                whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all hover:shadow-xl"
-              >
-                <div className="w-14 h-14 bg-gradient-to-br from-[#2563EB] to-[#A7F3D0] rounded-2xl flex items-center justify-center mb-6">
-                  <feature.icon className="h-7 w-7 text-white" />
-                </div>
-                <h3 className="text-2xl font-semibold text-white mb-4">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-400 leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="how" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              Comment ça marche
-            </h2>
-            <p className="text-xl text-gray-400">
-              Trois étapes pour votre conformité
-            </p>
-          </motion.div>
-
-          <div className="relative max-w-4xl mx-auto">
-            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#2563EB] via-[#A7F3D0] to-[#2563EB] hidden lg:block" />
-
-            {[
-              { step: "01", title: "Créez votre DPP", description: "Saisissez les informations produit via notre interface guidée" },
-              { step: "02", title: "Générez le QR Code", description: "Obtenez instantanément un QR code unique et conforme" },
-              { step: "03", title: "Diffusez", description: "Imprimez, intégrez ou partagez votre passeport numérique" },
-            ].map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className={`relative flex items-center gap-8 mb-12 ${
-                  index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                }`}
-              >
-                <div className="flex-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-all">
-                  <div className="text-5xl font-bold text-[#2563EB]/20 mb-4">{step.step}</div>
-                  <h3 className="text-2xl font-semibold text-white mb-3">{step.title}</h3>
-                  <p className="text-gray-400">{step.description}</p>
-                </div>
-                <div className="hidden lg:block absolute left-1/2 w-6 h-6 bg-[#A7F3D0] rounded-full -translate-x-1/2 ring-4 ring-[#0B1120]" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 relative">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl sm:text-5xl font-bold text-white mb-4">
-              Tarifs transparents
-            </h2>
-            <p className="text-xl text-gray-400">
-              Choisissez le plan adapté à votre volume
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: "Starter",
-                price: "49€",
-                period: "/mois",
-                features: ["100 DPP/mois", "QR codes illimités", "Support email", "Hébergement inclus"],
-                popular: false,
-              },
-              {
-                name: "Business",
-                price: "149€",
-                period: "/mois",
-                features: ["500 DPP/mois", "API REST complète", "Support prioritaire", "Multi-utilisateurs"],
-                popular: true,
-              },
-              {
-                name: "Enterprise",
-                price: "Sur mesure",
-                period: "",
-                features: ["Volume illimité", "Intégration ERP", "Account manager", "SLA garanti"],
-                popular: false,
-              },
-            ].map((plan, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                className={`relative bg-white/5 backdrop-blur-sm border rounded-2xl p-8 hover:bg-white/10 transition-all ${
-                  plan.popular ? 'border-[#2563EB] ring-2 ring-[#2563EB]/50 scale-105' : 'border-white/10'
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#2563EB] text-white px-4 py-1 rounded-full text-sm font-semibold">
-                    Populaire
+            <div className="grid gap-8 lg:grid-cols-3">
+              {[0, 1, 2].map((tier) => (
+                <div key={tier} className="flex flex-col rounded-3xl border border-white/5 bg-white/[0.03] p-8">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xl font-semibold text-white">
+                      {tier === 0 && 'Essentiel'}
+                      {tier === 1 && 'Croissance'}
+                      {tier === 2 && 'Entreprise'}
+                    </h3>
+                    {tier === 1 && (
+                      <span className="rounded-full border border-pink-400/40 bg-pink-500/20 px-3 py-1 text-xs text-pink-200">
+                        Populaire
+                      </span>
+                    )}
                   </div>
-                )}
-                <h3 className="text-2xl font-semibold text-white mb-2">{plan.name}</h3>
-                <div className="mb-6">
-                  <span className="text-5xl font-bold text-white">{plan.price}</span>
-                  {plan.period && <span className="text-gray-400">{plan.period}</span>}
-                </div>
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, i) => (
-                    <li key={i} className="flex items-center text-gray-300">
-                      <CheckCircle className="h-5 w-5 text-[#A7F3D0] mr-3" />
-                      {feature}
+                  <p className="mt-4 text-sm text-white/70">
+                    {tier === 0 && 'Tout ce qu’il faut pour créer, publier et suivre vos premiers passeports produit.'}
+                    {tier === 1 && 'Automatisez vos workflows et déployez l’infrastructure passeport à l’échelle internationale.'}
+                    {tier === 2 && 'Programmes sur mesure, support dédié et gouvernance renforcée pour les groupes mondiaux.'}
+                  </p>
+                  <div className="mt-8 text-4xl font-semibold text-white">
+                    {tier === 0 && '0 €'}
+                    {tier === 1 && '349 €'}
+                    {tier === 2 && 'Sur mesure'}
+                  </div>
+                  <ul className="mt-8 space-y-4 text-sm text-white/70">
+                    <li className="flex items-center gap-3">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+                      API temps réel et webhooks
                     </li>
-                  ))}
-                </ul>
-                <Button
-                  className={`w-full rounded-xl py-6 ${
-                    plan.popular
-                      ? 'bg-[#2563EB] hover:bg-[#1d4ed8] text-white'
-                      : 'bg-white/10 hover:bg-white/20 text-white border border-white/20'
-                  }`}
-                >
-                  Commencer
-                </Button>
-              </motion.div>
-            ))}
+                    <li className="flex items-center gap-3">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+                      Tableaux de bord interactifs
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle2 className="h-4 w-4 text-emerald-300" />
+                      {tier === 2 ? 'Support dédié 24/7' : 'Support prioritaire'}
+                    </li>
+                  </ul>
+                  <Button
+                    variant="outline"
+                    className="mt-10 rounded-full border-white/40 bg-white/10 text-white hover:bg-white/20"
+                  >
+                    {tier === 2 ? 'Contacter notre équipe' : 'Commencer'}
+                  </Button>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <footer className="border-t border-white/10 py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-2 mb-6 md:mb-0">
-              <QrCode className="h-8 w-8 text-[#2563EB]" />
-              <span className="text-xl font-semibold text-white">Tally</span>
-            </div>
-            <div className="flex flex-wrap justify-center gap-8 text-gray-400">
-              <a href="#" className="hover:text-white transition-colors">Produit</a>
-              <a href="#" className="hover:text-white transition-colors">Documentation</a>
-              <a href="#" className="hover:text-white transition-colors">Conformité</a>
-              <a href="#" className="hover:text-white transition-colors">Contact</a>
+        <section id="ressources" className="relative py-24">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+              <div className="space-y-6">
+                <p className="text-sm uppercase tracking-[0.4em] text-white/40">Ressources</p>
+                <h2 className="text-4xl font-semibold text-white">Un accompagnement complet pour votre équipe.</h2>
+                <p className="text-lg text-white/70">
+                  Des guides de conformité, des SDK maintenus par nos équipes et un support live pour sécuriser chaque étape de votre projet passeport.
+                </p>
+                <div className="grid gap-4 text-sm text-white/70">
+                  <div className="flex items-start gap-3">
+                    <Sparkles className="mt-1 h-5 w-5 text-indigo-300" />
+                    <span>Playbooks de lancement prêts à l’emploi pour vos marchés européens.</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <ShieldCheck className="mt-1 h-5 w-5 text-indigo-300" />
+                    <span>Veille réglementaire continue et synthèses sectorielles envoyées chaque semaine.</span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <Users className="mt-1 h-5 w-5 text-indigo-300" />
+                    <span>Communauté Slack privée avec plus de 400 experts circularité et data.</span>
+                  </div>
+                </div>
+              </div>
+              <div className="rounded-[3rem] border border-white/10 bg-black/60 p-10 shadow-[0_30px_80px_-20px_rgba(15,23,42,0.8)] backdrop-blur">
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-6">
+                  <p className="text-sm uppercase tracking-[0.35em] text-white/40">Newsletter</p>
+                  <h3 className="mt-4 text-2xl font-semibold text-white">Recevez le briefing ESPR</h3>
+                  <p className="mt-3 text-sm text-white/70">
+                    Les dernières actualités réglementaires, des benchmarks sectoriels et des bonnes pratiques directement dans votre boîte mail.
+                  </p>
+                  <form className="mt-6 space-y-4">
+                    <input
+                      type="email"
+                      required
+                      placeholder="prenom@entreprise.com"
+                      className="w-full rounded-full border border-white/20 bg-black/60 px-5 py-3 text-sm text-white placeholder:text-white/40 focus:border-white focus:outline-none"
+                    />
+                    <Button type="submit" className="w-full rounded-full bg-white py-3 text-sm font-semibold text-slate-900 hover:bg-white/90">
+                      S’inscrire
+                    </Button>
+                  </form>
+                </div>
+                <div className="mt-6 rounded-3xl border border-white/10 bg-white/5 p-6 text-sm text-white/70">
+                  <p className="font-semibold text-white">Webinaire en direct</p>
+                  <p className="mt-2">Audit ESPR &amp; Passeports produits : les retours de trois marques françaises.</p>
+                  <p className="mt-4 text-xs uppercase tracking-[0.3em] text-white/40">Jeudi 21 mars • 11h00</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="mt-8 text-center text-gray-500 text-sm">
-            © 2024 Tally. Conforme ESPR. Made in Europe.
+        </section>
+      </main>
+
+      <footer className="border-t border-white/5 bg-black/60 py-12">
+        <div className="mx-auto flex max-w-6xl flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+          <p className="text-sm text-white/60">© {new Date().getFullYear()} Tally. Tous droits réservés.</p>
+          <div className="flex flex-wrap gap-6 text-sm text-white/60">
+            <a href="#">Conditions</a>
+            <a href="#">Confidentialité</a>
+            <a href="#">Sécurité</a>
+            <a href="/demo">Démo</a>
           </div>
         </div>
       </footer>
