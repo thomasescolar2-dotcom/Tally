@@ -76,11 +76,74 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply text-foreground;
-    background-color: #0a0a1f;
-    color: #ffffff;
+body {
+  @apply text-foreground;
+  background-color: #0a0a1f;
+  color: #ffffff;
+}
+}
+
+@keyframes gradient-orbit {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0.7;
   }
+  50% {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes soft-pulse {
+  0%,
+  100% {
+    transform: translateY(0px);
+    box-shadow: 0 30px 90px -25px rgba(15, 23, 42, 0.65);
+  }
+  50% {
+    transform: translateY(-6px);
+    box-shadow: 0 40px 110px -20px rgba(42, 111, 255, 0.35);
+  }
+}
+
+.animate-gradient-slow {
+  animation: gradient-orbit 26s linear infinite;
+}
+
+.animate-soft-pulse {
+  animation: soft-pulse 8s ease-in-out infinite;
+}
+
+.wave-button {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.3s ease;
+}
+
+.wave-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 0% 50%, rgba(236, 72, 153, 0.85) 0%, rgba(236, 72, 153, 0.65) 40%, rgba(236, 72, 153, 0.5) 60%, rgba(236, 72, 153, 0.25) 100%);
+  transform: translateX(-120%);
+  transition: transform 0.35s ease;
+}
+
+.wave-button:hover::after {
+  transform: translateX(0%);
+}
+
+.wave-button span {
+  position: relative;
+  z-index: 1;
 }
 
 .wave-button {
