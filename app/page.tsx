@@ -1,10 +1,51 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, BarChart3, Building2, CheckCircle2, ShieldCheck, Sparkles, Users, Wallet } from 'lucide-react';
 import { Header } from '@/components/header';
 import { Button } from '@/components/ui/button';
+import { Archivo_Black } from 'next/font/google';
+import { cn } from '@/lib/utils';
+
+const archivoBlack = Archivo_Black({ subsets: ['latin'], weight: '400' });
+
+const navLinks = [
+  { href: '#produit', label: 'Produit' },
+  { href: '#solutions', label: 'Solutions' },
+  { href: '#tarifs', label: 'Tarifs' },
+  { href: '#ressources', label: 'Ressources' },
+];
+
+const trustedLogos = ['Vente-privee', 'Le Slip Français', 'Decathlon', 'LVMH'];
+
+const featureCards = [
+  {
+    icon: ShieldCheck,
+    title: 'Conformité automatisée',
+    description:
+      'Une surveillance continue des réglementations textiles et ESPR avec alertes proactives avant chaque mise sur le marché.',
+  },
+  {
+    icon: Wallet,
+    title: 'Monétisation transparente',
+    description:
+      'Connectez vos flux de paiements pour facturer chaque passeport numérique et visualiser les revenus générés en temps réel.',
+  },
+  {
+    icon: Sparkles,
+    title: 'Expériences immersives',
+    description:
+      'Racontez l’histoire de vos produits grâce à des expériences interactives, personnalisées pour chaque marque et collection.',
+  },
+];
+
+const metrics = [
+  { value: '7 min', label: 'Pour créer un passeport complet' },
+  { value: '98 %', label: 'Des audits validés du premier coup' },
+  { value: '2,5x', label: 'De conversion sur les pages produit' },
+];
 
 const trustedLogos = ['Vente-privee', 'Le Slip Français', 'Decathlon', 'LVMH'];
 
